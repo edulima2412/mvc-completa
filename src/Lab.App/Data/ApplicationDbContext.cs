@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Lab.App.ViewModels;
 
 namespace Lab.App.Data
 {
@@ -12,5 +10,6 @@ namespace Lab.App.Data
             : base(options)
         {
         }
+        public DbSet<Lab.App.ViewModels.ProdutoViewModel> ProdutoViewModel { get; set; }
     }
 }

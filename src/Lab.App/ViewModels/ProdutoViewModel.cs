@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -9,7 +10,11 @@ namespace Lab.App.ViewModels
     {
         [Key]
         public Guid Id { get; set; }
-        
+
+        [DisplayName("Fornecedor")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public Guid FornecedorId { get; set; }
+
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         [StringLength(200, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Nome { get; set; }
@@ -33,5 +38,7 @@ namespace Lab.App.ViewModels
         public bool Ativo { get; set; }
 
         public FornecedorViewModel Fornecedor { get; set; }
+
+        public IEnumerable<FornecedorViewModel> Fornecedores { get; set; }
     }
 }
