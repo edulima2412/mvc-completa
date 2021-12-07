@@ -73,7 +73,21 @@ namespace Lab.App
 
             app.UseAuthentication();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "fornecedores",
+                    "{controller=Fornecedores}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "produtos",
+                    "{controller=Produtos}/{action=Index}/{id?}");
+            });
+            
         }
     }
 }
