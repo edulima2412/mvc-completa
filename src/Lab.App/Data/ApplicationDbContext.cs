@@ -11,5 +11,6 @@ namespace Lab.App.Data
         {
         }
         public DbSet<Lab.App.ViewModels.ProdutoViewModel> ProdutoViewModel { get; set; }
+        public DbSet<Lab.App.ViewModels.EnderecoViewModel> EnderecoViewModel { get; set; }
     }
 }
