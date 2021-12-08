@@ -25,7 +25,7 @@ CREATE TABLE [Enderecos] (
     [FornecedorId] uniqueidentifier NOT NULL,
     [Logradouro] varchar(200) NOT NULL,
     [Numero] varchar(50) NOT NULL,
-    [Complemento] varchar(250) NOT NULL,
+    [Complemento] varchar(250) NULL,
     [Cep] varchar(8) NOT NULL,
     [Bairro] varchar(100) NOT NULL,
     [Cidade] varchar(100) NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE [Produtos] (
     [Nome] varchar(200) NOT NULL,
     [Descricao] varchar(1000) NOT NULL,
     [Imagem] varchar(100) NOT NULL,
-    [Valor] decimal(18,2) NOT NULL,
+    [Valor] decimal(10,2) NOT NULL,
     [DataCadastro] datetime2 NOT NULL,
     [Ativo] bit NOT NULL,
     CONSTRAINT [PK_Produtos] PRIMARY KEY ([Id]),
@@ -60,7 +60,7 @@ CREATE INDEX [IX_Produtos_FornecedorId] ON [Produtos] ([FornecedorId]);
 GO
 
 INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20211204142531_Inicial', N'2.2.1-servicing-10028');
+VALUES (N'20211208105538_Inicial', N'2.2.1-servicing-10028');
 
 GO
 

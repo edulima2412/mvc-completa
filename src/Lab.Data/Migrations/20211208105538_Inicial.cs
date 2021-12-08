@@ -30,7 +30,7 @@ namespace Lab.Data.Migrations
                     FornecedorId = table.Column<Guid>(nullable: false),
                     Logradouro = table.Column<string>(type: "varchar(200)", nullable: false),
                     Numero = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Complemento = table.Column<string>(type: "varchar(250)", nullable: false),
+                    Complemento = table.Column<string>(type: "varchar(250)", nullable: true),
                     Cep = table.Column<string>(type: "varchar(8)", nullable: false),
                     Bairro = table.Column<string>(type: "varchar(100)", nullable: false),
                     Cidade = table.Column<string>(type: "varchar(100)", nullable: false),
@@ -56,7 +56,7 @@ namespace Lab.Data.Migrations
                     Nome = table.Column<string>(type: "varchar(200)", nullable: false),
                     Descricao = table.Column<string>(type: "varchar(1000)", nullable: false),
                     Imagem = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Valor = table.Column<decimal>(nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     DataCadastro = table.Column<DateTime>(nullable: false),
                     Ativo = table.Column<bool>(nullable: false)
                 },

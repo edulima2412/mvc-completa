@@ -18,6 +18,10 @@ namespace Lab.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(1000)");
 
+            builder.Property(p => p.Valor)
+                .IsRequired()
+                .HasColumnType("decimal(10,2)");
+
             builder.Property(p => p.Imagem)
                 .IsRequired()
                 .HasColumnType("varchar(100)");
