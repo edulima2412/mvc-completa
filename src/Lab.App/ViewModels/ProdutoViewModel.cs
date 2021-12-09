@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Lab.App.ViewModels
 {
@@ -40,8 +41,10 @@ namespace Lab.App.ViewModels
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
 
+        [NotMapped]
         public FornecedorViewModel Fornecedor { get; set; }
 
+        [NotMapped]
         public IEnumerable<FornecedorViewModel> Fornecedores { get; set; }
     }
 }
