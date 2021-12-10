@@ -37,3 +37,52 @@
         }
     });
 }
+
+function BuscaCep() {
+    $(document).ready(function () {
+
+        //Limpa valores do formulario cep.
+        function limpa_formulario_cep() {
+            $('#Endereco_Logradouro').val("");
+            $('#Endereco_Bairro').val("");
+            $('#Endereco_Cidade').val("");
+            $('#Endereco_Estado').val("");
+        }
+
+        //Quando o campo cep perde o foco.
+        $('#Endereco_Cep').blur(function () {
+
+            //Nova variavel cep somente com digitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            if (cep != "") {
+                //Regex para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                if (validacep.test(cep)) {
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $('#Endereco_Logradouro').val("...");
+                    $('#Endereco_Bairro').val("...");
+                    $('#Endereco_Cidade').val("...");
+                    $('#Endereco_Estado').val("...");
+
+                    //Consulta o webservice viacep.com.br
+                    $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?",
+                        function (dados) {
+                            if (!("erro" in dados)) {
+                                $('#Endereco_Logradouro').val(dados.logradouro);
+                                $('#Endereco_Bairro').val(dados.bairro);
+                                $('#Endereco_Cidade').val(dados.localidade);
+                                $('#Endereco_Estado').val(dados.uf);
+                            } else {
+                                limpa_formulario_cep();
+                                alert("CEP não encontrado.");
+                            }
+                        });
+                } else {
+                    limpa_formulario_cep();
+                }
+            }
+        });
+    });
+}
