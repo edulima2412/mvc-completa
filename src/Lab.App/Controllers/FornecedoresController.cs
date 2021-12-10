@@ -132,7 +132,7 @@ namespace Lab.App.Controllers
 
             await _enderecoRepository.Atualizar(_mapper.Map<Endereco>(fornecedorViewModel.Endereco));
 
-            var url = Url.Action("ObterEndereco", "Fornecedores", new { id = fornecedorViewModel.Id });
+            var url = Url.Action("ObterEndereco", "Fornecedores", new { id = fornecedorViewModel.Endereco.FornecedorId });
             return Json(new { success = true, url });
         }
 
