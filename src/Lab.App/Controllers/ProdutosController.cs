@@ -24,11 +24,13 @@ namespace Lab.App.Controllers
             _mapper = mapper;
         }
 
+        [Route("lista-de-produtos")]
         public async Task<IActionResult> Index()
         {
             return View(_mapper.Map<IEnumerable<ProdutoViewModel>>(await _produtoRepository.ObterProdutosFornecedores()));
         }
 
+        [Route("dados-do-produto/{id:guid}")]
         public async Task<IActionResult> Details(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
@@ -40,6 +42,7 @@ namespace Lab.App.Controllers
             return View(produtoViewModel);
         }
 
+        [Route("novo-produto")]
         public async Task<IActionResult> Create()
         {
             var produtoViewModel = await PopularFornecedores(new ProdutoViewModel());
@@ -48,6 +51,7 @@ namespace Lab.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("novo-produto")]
         public async Task<IActionResult> Create(ProdutoViewModel produtoViewModel)
         {
             produtoViewModel = await PopularFornecedores(produtoViewModel);
@@ -67,6 +71,7 @@ namespace Lab.App.Controllers
             return RedirectToAction(nameof(Index));          
         }
 
+        [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
@@ -80,6 +85,7 @@ namespace Lab.App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id, ProdutoViewModel produtoViewModel)
         {
             if (id != produtoViewModel.Id) return NotFound();
@@ -109,6 +115,7 @@ namespace Lab.App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
@@ -122,6 +129,7 @@ namespace Lab.App.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
             var produtoViewModel = await ObterProduto(id);
@@ -133,6 +141,7 @@ namespace Lab.App.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Route("editar-produto/{id:guid}")]
         private async Task<ProdutoViewModel> ObterProduto(Guid id)
         {
             var produto = _mapper.Map<ProdutoViewModel>(await _produtoRepository.ObterProdutoFornecedor(id));
