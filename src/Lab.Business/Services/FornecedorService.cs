@@ -23,7 +23,7 @@ namespace Lab.Business.Services
         public async Task Adicionar(Fornecedor fornecedor)
         {
             // Validar o estado da entidade
-            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) && !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
 
             // Se não existe fornecedor com o mesmo documento
             if(_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
