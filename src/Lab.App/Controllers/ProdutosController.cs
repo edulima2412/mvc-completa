@@ -63,7 +63,6 @@ namespace Lab.App.Controllers
 
         [ClaimsAuthorize("Produto", "Adicionar")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Route("novo-produto")]
         public async Task<IActionResult> Create(ProdutoViewModel produtoViewModel)
         {
@@ -101,7 +100,6 @@ namespace Lab.App.Controllers
 
         [ClaimsAuthorize("Produto", "Editar")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Route("editar-produto/{id:guid}")]
         public async Task<IActionResult> Edit(Guid id, ProdutoViewModel produtoViewModel)
         {
@@ -150,7 +148,6 @@ namespace Lab.App.Controllers
 
         [ClaimsAuthorize("Produto", "Excluir")]
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         [Route("excluir-produto/{id:guid}")]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
