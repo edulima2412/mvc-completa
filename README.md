@@ -5,9 +5,7 @@
 [![Maintenance](https://img.shields.io/badge/maintained-yes-green.svg)](https://github.com/edulima2412/mvc-completa/commits/master)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
-:star: Se puder me dar estrela no GitHub — Ajuda!
-
-## MVC
+## ASP.NET MVC Core
 * The Model-View-Controller (MVC) pattern
 * Create models and controllers
 * Attribute routing (with parameters)
