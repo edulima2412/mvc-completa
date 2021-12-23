@@ -1,7 +1,4 @@
 # MVC Lab App ⚡️ 
-
-![GitHub stars](https://img.shields.io/github/stars/edulima2412/mvc-completa) 
-![GitHub forks](https://img.shields.io/github/forks/edulima2412/mvc-completa)
 [![Maintenance](https://img.shields.io/badge/maintained-yes-green.svg)](https://github.com/edulima2412/mvc-completa/commits/master)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 
