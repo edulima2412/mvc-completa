@@ -1,9 +1,9 @@
-﻿using Lab.Business.Interfaces;
-using Lab.Business.Models;
-using Lab.Business.Models.Validations;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Lab.Business.Intefaces;
+using Lab.Business.Models;
+using Lab.Business.Models.Validations;
 
 namespace Lab.Business.Services
 {
@@ -12,9 +12,9 @@ namespace Lab.Business.Services
         private readonly IFornecedorRepository _fornecedorRepository;
         private readonly IEnderecoRepository _enderecoRepository;
 
-        public FornecedorService(IFornecedorRepository fornecedorRepository,
-            IEnderecoRepository enderecoRepository,
-            INotificador notificador) : base(notificador)
+        public FornecedorService(IFornecedorRepository fornecedorRepository, 
+                                 IEnderecoRepository enderecoRepository,
+                                 INotificador notificador) : base(notificador)
         {
             _fornecedorRepository = fornecedorRepository;
             _enderecoRepository = enderecoRepository;
@@ -22,13 +22,12 @@ namespace Lab.Business.Services
 
         public async Task Adicionar(Fornecedor fornecedor)
         {
-            // Validar o estado da entidade
-            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
+            if (!ExecutarValidacao(new FornecedorValidation(), fornecedor) 
+                || !ExecutarValidacao(new EnderecoValidation(), fornecedor.Endereco)) return;
 
-            // Se não existe fornecedor com o mesmo documento
-            if(_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
+            if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento).Result.Any())
             {
-                Notificar("Já existe um fornecedor com este documento informado.");
+                Notificar("Já existe um fornecedor com este documento infomado.");
                 return;
             }
 
@@ -41,7 +40,7 @@ namespace Lab.Business.Services
 
             if (_fornecedorRepository.Buscar(f => f.Documento == fornecedor.Documento && f.Id != fornecedor.Id).Result.Any())
             {
-                Notificar("Já existe um fornecedor com este documento informado.");
+                Notificar("Já existe um fornecedor com este documento infomado.");
                 return;
             }
 
@@ -61,6 +60,13 @@ namespace Lab.Business.Services
             {
                 Notificar("O fornecedor possui produtos cadastrados!");
                 return;
+            }
+
+            var endereco = await _enderecoRepository.ObterEnderecoPorFornecedor(id);
+
+            if (endereco != null)
+            {
+                await _enderecoRepository.Remover(endereco.Id);
             }
 
             await _fornecedorRepository.Remover(id);

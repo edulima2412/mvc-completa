@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Localization;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Localization;
 
 namespace Lab.App.Configurations
 {
     public static class GlobalizationConfig
     {
-        public static IApplicationBuilder UseGlobalizationConfiguration(this IApplicationBuilder app)
+        public static IApplicationBuilder UseGlobalizationConfig(this IApplicationBuilder app)
         {
             var defaultCulture = new CultureInfo("pt-BR");
             var localizationOptions = new RequestLocalizationOptions

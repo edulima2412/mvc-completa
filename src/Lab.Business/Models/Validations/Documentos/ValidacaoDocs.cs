@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Lab.Business.Models.Validations.Documentos
 {
@@ -13,23 +11,13 @@ namespace Lab.Business.Models.Validations.Documentos
         {
             var cpfNumeros = Utils.ApenasNumeros(cpf);
 
-            if (!TemTamanhoValido(cpfNumeros)) return false;
-
+            if (!TamanhoValido(cpfNumeros)) return false;
             return !TemDigitosRepetidos(cpfNumeros) && TemDigitosValidos(cpfNumeros);
         }
 
-        private static bool TemDigitosValidos(string valor)
+        private static bool TamanhoValido(string valor)
         {
-            var number = valor.Substring(0, TamanhoCpf - 2);
-            var digitoVerificador = new DigitoVerificador(number)
-                .ComMultiplicadoresDeAte(2, 11)
-                .Substituindo("0", 10, 11);
-
-            var firstDigit = digitoVerificador.CalculaDigito();
-            digitoVerificador.AddDigito(firstDigit);
-            var secondDigit = digitoVerificador.CalculaDigito();
-
-            return string.Concat(firstDigit, secondDigit) == valor.Substring(TamanhoCpf - 2, 2);
+            return valor.Length == TamanhoCpf;
         }
 
         private static bool TemDigitosRepetidos(string valor)
@@ -50,9 +38,17 @@ namespace Lab.Business.Models.Validations.Documentos
             return invalidNumbers.Contains(valor);
         }
 
-        private static bool TemTamanhoValido(string valor)
+        private static bool TemDigitosValidos(string valor)
         {
-            return valor.Length == TamanhoCpf;
+            var number = valor.Substring(0, TamanhoCpf - 2);
+            var digitoVerificador = new DigitoVerificador(number)
+                .ComMultiplicadoresDeAte(2, 11)
+                .Substituindo("0", 10, 11);
+            var firstDigit = digitoVerificador.CalculaDigito();
+            digitoVerificador.AddDigito(firstDigit);
+            var secondDigit = digitoVerificador.CalculaDigito();
+
+            return string.Concat(firstDigit, secondDigit) == valor.Substring(TamanhoCpf - 2, 2);
         }
     }
 
@@ -60,12 +56,11 @@ namespace Lab.Business.Models.Validations.Documentos
     {
         public const int TamanhoCnpj = 14;
 
-        public static bool Validar(string cnpj)
+        public static bool Validar(string cpnj)
         {
-            var cnpjNumeros = Utils.ApenasNumeros(cnpj);
+            var cnpjNumeros = Utils.ApenasNumeros(cpnj);
 
             if (!TemTamanhoValido(cnpjNumeros)) return false;
-
             return !TemDigitosRepetidos(cnpjNumeros) && TemDigitosValidos(cnpjNumeros);
         }
 
@@ -78,16 +73,16 @@ namespace Lab.Business.Models.Validations.Documentos
         {
             string[] invalidNumbers =
             {
-                "00000000000",
-                "11111111111",
-                "22222222222",
-                "33333333333",
-                "44444444444",
-                "55555555555",
-                "66666666666",
-                "77777777777",
-                "88888888888",
-                "99999999999"
+                "00000000000000",
+                "11111111111111",
+                "22222222222222",
+                "33333333333333",
+                "44444444444444",
+                "55555555555555",
+                "66666666666666",
+                "77777777777777",
+                "88888888888888",
+                "99999999999999"
             };
             return invalidNumbers.Contains(valor);
         }
@@ -95,10 +90,10 @@ namespace Lab.Business.Models.Validations.Documentos
         private static bool TemDigitosValidos(string valor)
         {
             var number = valor.Substring(0, TamanhoCnpj - 2);
+
             var digitoVerificador = new DigitoVerificador(number)
                 .ComMultiplicadoresDeAte(2, 9)
                 .Substituindo("0", 10, 11);
-
             var firstDigit = digitoVerificador.CalculaDigito();
             digitoVerificador.AddDigito(firstDigit);
             var secondDigit = digitoVerificador.CalculaDigito();
@@ -113,17 +108,17 @@ namespace Lab.Business.Models.Validations.Documentos
         private const int Modulo = 11;
         private readonly List<int> _multiplicadores = new List<int> { 2, 3, 4, 5, 6, 7, 8, 9 };
         private readonly IDictionary<int, string> _substituicoes = new Dictionary<int, string>();
-        private readonly bool _complementarDoModulo = true;
+        private bool _complementarDoModulo = true;
 
         public DigitoVerificador(string numero)
         {
             _numero = numero;
         }
 
-        public DigitoVerificador ComMultiplicadoresDeAte(int primeiro, int ultimo)
+        public DigitoVerificador ComMultiplicadoresDeAte(int primeiroMultiplicador, int ultimoMultiplicador)
         {
             _multiplicadores.Clear();
-            for (int i = primeiro; i <= ultimo; i++)
+            for (var i = primeiroMultiplicador; i <= ultimoMultiplicador; i++)
                 _multiplicadores.Add(i);
 
             return this;
@@ -135,7 +130,6 @@ namespace Lab.Business.Models.Validations.Documentos
             {
                 _substituicoes[i] = substituto;
             }
-
             return this;
         }
 
@@ -146,10 +140,10 @@ namespace Lab.Business.Models.Validations.Documentos
 
         public string CalculaDigito()
         {
-            return (_numero.Length <= 0) ? "" : GetDigitoSum();
+            return !(_numero.Length > 0) ? "" : GetDigitSum();
         }
 
-        private string GetDigitoSum()
+        private string GetDigitSum()
         {
             var soma = 0;
             for (int i = _numero.Length - 1, m = 0; i >= 0; i--)

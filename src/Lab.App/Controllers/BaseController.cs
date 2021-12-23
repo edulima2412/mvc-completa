@@ -1,4 +1,4 @@
-﻿using Lab.Business.Interfaces;
+﻿using Lab.Business.Intefaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab.App.Controllers

@@ -1,16 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System;
+using Microsoft.AspNetCore.Routing;
 
 namespace Lab.App.Extensions
 {
     [HtmlTargetElement("*", Attributes = "supress-by-claim-name")]
     [HtmlTargetElement("*", Attributes = "supress-by-claim-value")]
-    public class ApagaElementoByClaimTagHelper : TagHelper
+    public class ApagaElementoTagHelper : TagHelper
     {
         private readonly IHttpContextAccessor _contextAccessor;
 
-        public ApagaElementoByClaimTagHelper(IHttpContextAccessor contextAccessor)
+        public ApagaElementoTagHelper(IHttpContextAccessor contextAccessor)
         {
             _contextAccessor = contextAccessor;
         }
@@ -35,4 +36,33 @@ namespace Lab.App.Extensions
             output.SuppressOutput();
         }
     }
+
+    [HtmlTargetElement("*", Attributes = "supress-by-action")]
+    public class ApagaElementoByActionTagHelper : TagHelper
+    {
+        private readonly IHttpContextAccessor _contextAccessor;
+
+        public ApagaElementoByActionTagHelper(IHttpContextAccessor contextAccessor)
+        {
+            _contextAccessor = contextAccessor;
+        }
+
+        [HtmlAttributeName("supress-by-action")]
+        public string ActionName { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+            if (output == null)
+                throw new ArgumentNullException(nameof(output));
+
+            var action = _contextAccessor.HttpContext.GetRouteData().Values["action"].ToString();
+
+            if (ActionName.Contains(action)) return;
+
+            output.SuppressOutput();
+        }
+    }
+
 }

@@ -1,5 +1,5 @@
-﻿@model Lab.App.ViewModels.FornecedorViewModel
-@using Lab.App.Extensions
+﻿@using Lab.App.Extensions
+@model Lab.App.ViewModels.FornecedorViewModel
 
 @{
     ViewData["Title"] = "Detalhes";
@@ -8,7 +8,7 @@
 <h1>@ViewData["Title"]</h1>
 
 <div>
-    <h4>Informações somente leitura</h4>
+    <h4>Informação somente leitura</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -31,10 +31,10 @@
         </dd>
     </dl>
 </div>
-
 <div>
-    <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+    <a class="btn btn-dark"  supress-by-claim-name="Fornecedor" supress-by-claim-value="Editar" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
     <a class="btn btn-info" asp-action="Index">Voltar</a>
 </div>
+
 
 <partial name="_DetalhesEndereco" />

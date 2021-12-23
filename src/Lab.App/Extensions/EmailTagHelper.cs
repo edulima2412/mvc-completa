@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNetCore.Razor.TagHelpers;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Lab.App.Extensions
 {
     public class EmailTagHelper : TagHelper
     {
-        public string EmailDomain { get; set; } = "edulab.io";
-
+        public string EmailDomain { get; set; } = "desenvolvedor.io";
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
             output.TagName = "a";

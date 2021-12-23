@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Lab.Business.Models
 {
@@ -10,7 +11,7 @@ namespace Lab.Business.Models
         public Endereco Endereco { get; set; }
         public bool Ativo { get; set; }
 
-        /* EF Relation */
+        /* EF Relations */
         public IEnumerable<Produto> Produtos { get; set; }
     }
 }

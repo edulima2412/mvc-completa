@@ -1,11 +1,12 @@
 using AutoMapper;
 using Lab.App.Configurations;
-using Lab.Data.Contexts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Lab.Data.Context;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Lab.App
 {
@@ -13,7 +14,7 @@ namespace Lab.App
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(IHostingEnvironment hostEnvironment)
+        public Startup(IHostEnvironment hostEnvironment)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(hostEnvironment.ContentRootPath)
@@ -22,7 +23,9 @@ namespace Lab.App
                 .AddEnvironmentVariables();
 
             if (hostEnvironment.IsDevelopment())
+            {
                 builder.AddUserSecrets<Startup>();
+            }
 
             Configuration = builder.Build();
         }
@@ -31,23 +34,22 @@ namespace Lab.App
         {
             services.AddIdentityConfiguration(Configuration);
 
-            services.AddDbContext<LabDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<MeuDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAutoMapper(typeof(Startup));
 
             services.AddMvcConfiguration();
 
-            services.ResolveDepencias();
+            services.ResolveDependencies();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
@@ -58,27 +60,21 @@ namespace Lab.App
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+
+            app.UseRouting();
 
             app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseGlobalizationConfiguration();
+            app.UseGlobalizationConfig();
 
-            app.UseMvc(routes =>
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     "default",
                     "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    "fornecedores",
-                    "{controller=Fornecedores}/{action=Index}/{id?}");
-
-                routes.MapRoute(
-                    "produtos",
-                    "{controller=Produtos}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
-            
         }
     }
 }

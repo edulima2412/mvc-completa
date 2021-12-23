@@ -1,4 +1,4 @@
-﻿namespace Lab.App.ViewModels
+namespace Lab.App.ViewModels
 {
     public class ErrorViewModel
     {

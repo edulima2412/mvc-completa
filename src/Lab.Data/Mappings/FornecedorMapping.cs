@@ -8,13 +8,13 @@ namespace Lab.Data.Mappings
     {
         public void Configure(EntityTypeBuilder<Fornecedor> builder)
         {
-            builder.HasKey(f => f.Id);
+            builder.HasKey(p => p.Id);
 
-            builder.Property(f => f.Nome)
+            builder.Property(p => p.Nome)
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 
-            builder.Property(f => f.Documento)
+            builder.Property(p => p.Documento)
                 .IsRequired()
                 .HasColumnType("varchar(14)");
 

@@ -1,4 +1,9 @@
-﻿using Lab.App.ViewModels;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
+using Lab.App.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab.App.Controllers
@@ -6,6 +11,11 @@ namespace Lab.App.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
         {
             return View();
         }
@@ -23,19 +33,19 @@ namespace Lab.App.Controllers
             }
             else if (id == 404)
             {
-                modelErro.Mensagem = "A página que está procurando não existe! <br />Em caso de dúvidas entre em contato com nosso suporte.";
+                modelErro.Mensagem = "A página que está procurando não existe! <br />Em caso de dúvidas entre em contato com nosso suporte";
                 modelErro.Titulo = "Ops! Página não encontrada.";
                 modelErro.ErroCode = id;
             }
-            else if(id == 403)
+            else if (id == 403)
             {
-                modelErro.Mensagem = "Você não tem permissão para fazer isso.";
-                modelErro.Titulo = "Acesso Negado.";
+                modelErro.Mensagem = "Você não tem permissão para fazer isto.";
+                modelErro.Titulo = "Acesso Negado";
                 modelErro.ErroCode = id;
             }
             else
             {
-                return StatusCode(404);
+                return StatusCode(500);
             }
 
             return View("Error", modelErro);

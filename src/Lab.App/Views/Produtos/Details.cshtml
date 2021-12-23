@@ -5,7 +5,6 @@
 }
 
 <h4 style="padding-top: 50px">@ViewData["Title"]</h4>
-
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -52,9 +51,8 @@
         </dl>
 
         <div>
-            <a class="btn btn-dark" asp-action="Edit" asp-route-id="@Model.Id">Editar</a>
+            <a supress-by-claim-name="Produto" supress-by-claim-value="Editar" class="btn btn-dark" sp-action="Edit" asp-route-id="@Model.Id">Editar</a>
             <a class="btn btn-info" href="javascript:window.history.back();">Voltar</a>
         </div>
     </div>
 </div>
-

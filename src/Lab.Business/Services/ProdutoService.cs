@@ -1,8 +1,8 @@
-﻿using Lab.Business.Interfaces;
+﻿using System;
+using System.Threading.Tasks;
+using Lab.Business.Intefaces;
 using Lab.Business.Models;
 using Lab.Business.Models.Validations;
-using System;
-using System.Threading.Tasks;
 
 namespace Lab.Business.Services
 {
@@ -11,14 +11,14 @@ namespace Lab.Business.Services
         private readonly IProdutoRepository _produtoRepository;
 
         public ProdutoService(IProdutoRepository produtoRepository,
-            INotificador notificador) : base(notificador)
+                              INotificador notificador) : base(notificador)
         {
             _produtoRepository = produtoRepository;
         }
 
         public async Task Adicionar(Produto produto)
         {
-            if(!ExecutarValidacao(new ProdutoValidation(), produto)) return;
+            if (!ExecutarValidacao(new ProdutoValidation(), produto)) return;
 
             await _produtoRepository.Adicionar(produto);
         }

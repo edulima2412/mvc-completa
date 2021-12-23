@@ -1,9 +1,9 @@
 ﻿using Lab.App.Extensions;
-using Lab.Business.Interfaces;
-using Lab.Business.Notifications;
+using Lab.Business.Intefaces;
+using Lab.Business.Notificacoes;
 using Lab.Business.Services;
-using Lab.Data.Contexts;
-using Lab.Data.Repositories;
+using Lab.Data.Context;
+using Lab.Data.Repository;
 using Microsoft.AspNetCore.Mvc.DataAnnotations;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,9 +11,9 @@ namespace Lab.App.Configurations
 {
     public static class DependencyInjectionConfig
     {
-        public static IServiceCollection ResolveDepencias(this IServiceCollection services)
+        public static IServiceCollection ResolveDependencies(this IServiceCollection services)
         {
-            services.AddScoped<LabDbContext>();
+            services.AddScoped<MeuDbContext>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
             services.AddScoped<IEnderecoRepository, EnderecoRepository>();

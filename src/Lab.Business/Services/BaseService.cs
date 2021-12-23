@@ -1,8 +1,8 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using Lab.Business.Interfaces;
+﻿using Lab.Business.Intefaces;
 using Lab.Business.Models;
-using Lab.Business.Notifications;
+using Lab.Business.Notificacoes;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace Lab.Business.Services
 {
@@ -10,7 +10,7 @@ namespace Lab.Business.Services
     {
         private readonly INotificador _notificador;
 
-        public BaseService(INotificador notificador)
+        protected BaseService(INotificador notificador)
         {
             _notificador = notificador;
         }
@@ -25,7 +25,6 @@ namespace Lab.Business.Services
 
         protected void Notificar(string mensagem)
         {
-            // Propagar esse erro ate a camada de apresentação
             _notificador.Handle(new Notificacao(mensagem));
         }
 
@@ -33,9 +32,10 @@ namespace Lab.Business.Services
         {
             var validator = validacao.Validate(entidade);
 
-            if (validator.IsValid) return true;
+            if(validator.IsValid) return true;
 
             Notificar(validator);
+
             return false;
         }
     }

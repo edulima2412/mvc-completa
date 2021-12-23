@@ -1,10 +1,10 @@
-﻿using Lab.App.Extensions;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Lab.App.Extensions;
+using Lab.Business.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace Lab.App.ViewModels
 {
@@ -13,8 +13,8 @@ namespace Lab.App.ViewModels
         [Key]
         public Guid Id { get; set; }
 
-        [DisplayName("Fornecedor")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        [DisplayName("Fornecedor")]
         public Guid FornecedorId { get; set; }
 
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
@@ -23,11 +23,10 @@ namespace Lab.App.ViewModels
 
         [DisplayName("Descrição")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
-        [StringLength(1000, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 10)]
+        [StringLength(1000, ErrorMessage = "O campo {0} precisa ter entre {2} e {1} caracteres", MinimumLength = 2)]
         public string Descricao { get; set; }
 
         [DisplayName("Imagem do Produto")]
-        [NotMapped]
         public IFormFile ImagemUpload { get; set; }
 
         public string Imagem { get; set; }
@@ -42,10 +41,8 @@ namespace Lab.App.ViewModels
         [DisplayName("Ativo?")]
         public bool Ativo { get; set; }
 
-        [NotMapped]
         public FornecedorViewModel Fornecedor { get; set; }
 
-        [NotMapped]
         public IEnumerable<FornecedorViewModel> Fornecedores { get; set; }
     }
 }
